@@ -1,0 +1,64 @@
+# Node / JS
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+**/dist/
+back/dist/
+*.tgz
+
+# Environment / secrets
+.env
+.env.*
+.env.local
+.env.production
+.env.test
+secrets.*
+*.key
+*.pem
+
+# Angular / CLI / cache
+.angular/
+.angular-cache/
+.angular/cache/
+.cache/
+.tmp/
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# TypeScript
+*.tsbuildinfo
+
+# Coverage
+coverage/
+coverage-*/
+
+# Misc
+/*.local
+.pnp.cjs
+.pnp.js
+.cache-loader
+
+# Optional lockfiles (if you prefer not to commit)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
