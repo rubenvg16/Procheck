@@ -1,0 +1,32 @@
+.darkmode-toggle {
+  padding: 0.7rem 1.1rem;
+  border-radius: 2rem;
+  background: var(--color-darkmode-toggle-bg);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13), 0 0 0 2px rgba(255, 255, 255, 0.13) inset;
+  color: var(--color-darkmode-toggle-color);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s, color 0.3s, transform 0.2s;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.darkmode-toggle:active {
+  transform: scale(0.95);
+}
+
+body.dark-mode .darkmode-toggle {
+  background: var(--color-darkmode-toggle-bg-dark);
+  color: var(--color-darkmode-toggle-color-dark);
+}
+
+.darkmode-toggle mat-icon {
+  transition: color 0.3s, transform 0.4s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+body.dark-mode .darkmode-toggle mat-icon {
+  color: var(--color-darkmode-toggle-icon-dark);
+}

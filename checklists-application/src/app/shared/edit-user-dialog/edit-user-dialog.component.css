@@ -1,0 +1,342 @@
+*{
+  box-shadow: none !important;
+}
+
+/* Contenedor del Diálogo */
+.edit-dialog-container {
+  position: relative;
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Cabecera del Diálogo */
+.edit-dialog-header {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px 24px;
+  margin: -24px -24px 24px -24px;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 8px 8px 0 0;
+}
+
+.edit-dialog-header .user-icon {
+  color: var(--color-black);
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  margin-top: 1px;
+}
+
+.edit-dialog-header h2 {
+  margin: 10px 0 0 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-black);
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+}
+
+/* Contenido del Diálogo */
+.edit-dialog-content {
+  max-height: unset !important;
+  overflow: visible !important;
+  padding: 0;
+  margin: 0;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+mat-form-field input,
+mat-form-field mat-select {
+  margin-left: 0 !important;
+}
+
+mat-icon[matSuffix] {
+  color: #666;
+  margin-right: 4px;
+}
+
+/* Mensaje de Error */
+.error-message {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-error-light);
+  color: var(--color-error);
+  padding: 12px;
+  border-radius: 4px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+.error-message mat-icon {
+  margin-right: 8px;
+  color: var(--color-error);
+}
+
+/* Acciones del Diálogo */
+.edit-dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px -24px -24px -24px;
+  padding: 20px 24px;
+  background-color: #fafafa;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 0 0 8px 8px;
+}
+
+.cancel-button {
+  background-color: #fff !important;
+  color: #e53935 !important;
+  border: 2px solid #e53935 !important;
+  border-radius: 24px !important;
+  height: 44px;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 28px;
+  font-weight: 500;
+  font-size: 17px;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.cancel-button mat-icon {
+  color: #e53935 !important;
+  margin-right: 8px;
+  font-size: 22px;
+}
+
+.cancel-button:hover {
+  background-color: #ffeaea !important;
+  border-color: #b71c1c !important;
+  color: #b71c1c !important;
+}
+
+.save-button {
+  background-color: #21c87a !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 700;
+  min-width: 140px;
+  border-radius: 24px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 28px;
+  height: 44px;
+  font-size: 17px;
+  box-shadow: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.save-button mat-icon {
+  color: #fff !important;
+  margin-right: 8px;
+  font-size: 22px;
+}
+
+.cancel-button mat-icon,
+.save-button mat-icon {
+  /* Sube el icono ligeramente */
+  position: relative;
+  top: -2px;
+}
+
+.save-button:hover {
+  background-color: #1da866 !important;
+}
+
+.save-button:active {
+  font-weight: 900;
+}
+
+/* Overlay de Carga */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+/* Estilos Angular Material */
+::ng-deep .mat-dialog-container {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  overflow: hidden !important;
+  border-radius: 8px !important;
+}
+
+::ng-deep .mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  padding: 12px 0 !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  padding: 0 16px !important;
+}
+
+::ng-deep .custom-select-panel {
+  background-color: var(--color-white) !important;
+  color: var(--color-black);
+}
+
+/* Campos de Formulario */
+input.form-control:focus,
+select.form-select:focus {
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+  box-shadow: 0 0 0 0.2rem rgba(8, 172, 236, 0.15);
+}
+
+input.form-control,
+select.form-select {
+  padding-left: 2.2rem;
+  border-radius: 0.5rem !important;
+  border: 1px solid #ced4da;
+  height: 40px;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  background: var(--color-white);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-icon-wrapper {
+  position: relative;
+}
+
+.input-icon-wrapper .input-icon {
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray-dark);
+  pointer-events: none;
+  font-size: 1.1rem;
+}
+
+.input-icon-wrapper .bi-caret-down-fill.input-icon,
+.input-icon-wrapper .bi-chevron-down.input-icon {
+  left: auto;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray-dark);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+/* ========================== */
+/* Contenedor Principal - Card */
+/* ========================== */
+.card-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background-color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ========================== */
+/* Estilos para el Cartel de Confirmación */
+/* ========================== */
+.mat-dialog-container {
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.mat-dialog-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.mat-dialog-content {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+button.mat-button {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 10px 16px;
+  font-size: 14px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  min-width: 120px;
+}
+
+button.mat-button:hover {
+  transform: translateY(-2px);
+}
+
+button.mat-button.mat-accent {
+  background-color: #f44336;
+  color: white;
+  border: 1px solid #f44336;
+}
+
+button.mat-button.mat-accent:hover {
+  background-color: #d32f2f;
+}
+
+button.mat-button.mat-warn {
+  background-color: #607d8b;
+  color: white;
+  border: 1px solid #607d8b;
+}
+
+button.mat-button.mat-warn:hover {
+  background-color: #455a64;
+}
+
+/* --- RESPONSIVE: Apilar botones en móvil --- */
+@media (max-width: 600px) {
+  .edit-dialog-actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .cancel-button,
+  .save-button {
+    min-width: 100%;
+    width: 100%;
+    justify-content: center;
+    margin: 0 !important;
+  }
+}

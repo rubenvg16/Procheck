@@ -1,0 +1,59 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="position-relative min-vh-100 d-flex justify-content-center align-items-center">
+
+  <!-- Tarjeta -->
+  <div class="card shadow border-0" style="border-radius: 20px; width: auto; max-width: 700px;">
+    <div class="row g-0 align-items-center">
+      <!-- Columna Logo -->
+      <div class="col-auto text-center px-5 py-5">
+        <div class="bartolome-logo-animated">
+          <img src="assets/img/Logo.png" alt="Logo Bartolome" width="200" height="200" style="max-width:200px;">
+        </div>
+      </div>
+    
+      <!-- Columna Formu -->
+      <div class="col px-5 py-5">
+        <h2 class="fw-bold mb-4 text-center" style="font-size: 1.6rem; color: #212121;">
+          Iniciar sesi&oacute;n
+        </h2>
+
+        <div *ngIf="error" class="alert-error">
+          <span class="alert-error__icon">!</span>
+          Usuario o contrase&ntilde;a incorrectos
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <!-- Usuario -->
+          <div class="mb-3">
+            <img src="assets/img/user.svg" alt="Contraseña" style="width: 20px; margin-right: 8px;" />
+            <label class="form-label">Usuario</label>
+            <input type="text" class="form-control border-bottom-only" formControlName="username"
+              placeholder="Usuario" />
+          </div>
+
+          <!-- Contraseña -->
+          <div class="mb-3 position-relative">
+            <img src="assets/img/password.svg" alt="Contraseña" style="width: 20px; margin-right: 8px;" />
+            <label class="form-label">Contrase&ntilde;a</label>
+            <input [type]="showPassword ? 'text' : 'password'" class="form-control border-bottom-only password-input"
+              formControlName="password" [ngClass]="{'is-invalid': false}" placeholder="********"
+              style="padding-right: 38px;" />
+            <img [src]="eyeIcon" alt="Mostrar contraseña" (click)="togglePassword()" class="eye-icon" />
+          </div>
+
+          <!-- Botón -->
+          <button class="btn btn-primary w-100 mb-3 btn-pill" style="background: #00ADEF;"
+            [disabled]="loginForm.invalid">
+            Iniciar sesi&oacute;n
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+ <!-- Fondo con olas -->
+  <div class="fondo-olas">
+    <div class="imagenFondo imagenFondo-secundaria"></div>
+    <div class="imagenFondo"></div>
+  </div>
+</div>

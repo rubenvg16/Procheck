@@ -1,0 +1,15 @@
+.alert-success {
+    background-color: #d1f5e0;
+    color: #1b5e20;
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 12px 16px;
+}
+
+.alert-danger {
+    background-color: #eb4132;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 12px 16px;
+}

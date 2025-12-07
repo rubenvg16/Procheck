@@ -1,0 +1,136 @@
+/* ========================== */
+/* Contenedor del Diálogo */
+/* ========================== */
+.dialog-container {
+  min-width: 320px;
+  max-width: 500px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+}
+
+/* ========================== */
+/* Cabecera del Diálogo */
+/* ========================== */
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 6px 6px 0 0;  
+}
+
+.dialog-icon {
+  margin-right: 12px;
+  color: var(--color-black);
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.dialog-title {
+  margin: 0;
+  color: var(--color-black);
+  font-size: 20px;
+  font-weight: 500;
+  flex: 1;
+}
+
+/* ========================== */
+/* Contenido del Diálogo */
+/* ========================== */
+.dialog-content {
+  padding: 24px;
+  font-size: 16px;
+  line-height: 1.5;
+  
+}
+
+.dialog-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin: 0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.cancel-button,
+.confirm-button {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  min-width: 80px;
+  height: 36px;
+  font-size: 14px;
+  gap: 6px;
+}
+
+.cancel-button {
+  background-color: #fff;
+  color: #e53935;
+  border: 2px solid #e53935;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #fff0f0;
+  border-color: #b71c1c;
+  color: #b71c1c;
+}
+
+.confirm-button {
+  background-color: #21c87a !important;
+  border: none;
+  color: #fff !important;
+  font-weight: normal;
+  transition: background 0.2s, color 0.2s, font-weight 0.2s;
+  border-radius: 50px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+}
+
+.confirm-button:hover {
+  background-color: #1ba463 !important;
+}
+
+.confirm-button:active {
+  font-weight: bold;
+}
+
+.cancel-button mat-icon,
+.confirm-button mat-icon {
+  font-size: 18px !important;
+  width: 18px;
+  height: 18px;
+}
+
+button {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+::ng-deep .mat-dialog-container {
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+::ng-deep .mat-dialog-container:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}

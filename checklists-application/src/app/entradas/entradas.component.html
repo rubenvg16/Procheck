@@ -1,0 +1,23 @@
+<div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="entradas.length > 0; else noEntries">
+  <div *ngFor="let entrada of entradas" cdkDrag class="entrada-row">
+    <button class="btn-floating-sort" cdkDragHandle>
+      <mat-icon>drag_indicator</mat-icon>
+    </button>
+    <div class="entrada-content">
+      <mat-icon [ngClass]="entrada.tipo">{{ getIconForType(entrada.tipo) }}</mat-icon>
+      <span class="entry-text">{{ entrada.nombre }}</span>
+    </div>
+    <button class="btn-floating-delete" (click)="removeEntrada(entrada)">
+      <mat-icon class="icon-eliminar">delete</mat-icon>
+    </button>
+  </div>
+</div>
+
+<ng-template #noEntries>
+  <p>No hay entradas.</p>
+</ng-template>
+
+<!-- Add dark mode toggle button -->
+<div class="position-fixed bottom-0 end-0 m-3" style="z-index: 3000;">
+  <app-darkmode-toggle></app-darkmode-toggle>
+</div>

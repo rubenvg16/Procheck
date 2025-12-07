@@ -1,0 +1,154 @@
+<div class="position-relative min-vh-100 d-flex justify-content-center align-items-center">
+  <!-- Card -->
+  <div class="card shadow border-0" style="border-radius: 20px; width: auto; max-width: 750px; padding-top: 0.5rem; padding-bottom: 0.5rem;">
+    <div class="row g-0 align-items-center">
+      <!-- Logo -->
+      <div class="col-auto text-center px-5 py-2">
+        <!-- Sustituye el SVG animado por logo.png -->
+        <div class="bartolome-logo-animated">
+          <img src="/assets/img/Logo.png" alt="Logo Bartolome" class="logo-img">
+        </div>
+      </div>
+ 
+      <!-- Formulario -->
+      <div class="col px-5 py-2">
+        <!-- Cambia el color del título a negro -->
+        <h2 class="fw-bold mb-4 text-center" style="font-size: 1.6rem; color: black;">Registro</h2>
+
+        <!-- Mensaje de error si el usuario ya existe -->
+        <div *ngIf="userExistsError" class="alert alert-danger alert-dismissible fade show" role="alert">
+          El usuario ya existe. Por favor, utiliza otro correo electrónico.
+          <button type="button" class="btn-close" (click)="closeUserExistsError()"></button>
+        </div>
+
+        <div *ngIf="successMessage" class="alert alert-success text-center mb-4">
+          <i class="fas fa-check-circle mb-2" style="font-size: 24px;"></i>
+          <p class="mb-2" [innerHTML]="formattedSuccessMessage"></p>
+          <a routerLink="/auth/log-in" class="btn btn-link btn-pill px-4 py-2">
+            Ir al inicio de sesión &rarr;
+          </a>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <!-- Email -->
+          <div class="mb-3">
+            <div class="d-flex align-items-center mb-2">
+              <img src="assets/img/mail.svg" alt="Correo" style="width: 20px; margin-right: 8px;" />
+              <label class="form-label m-0">Correo electrónico</label>
+
+            </div>
+            <input type="email" class="form-control border-bottom-only" formControlName="email"
+              [ngClass]="{'is-invalid': form.get('email')?.invalid && form.get('email')?.touched}"
+              placeholder="example@gmail.com" />
+          </div>
+
+          <!-- Nombre y apellidos -->
+          <div class="mb-3">
+            <div class="d-flex align-items-center mb-2">
+              <img src="assets/img/user.svg" alt="Usuario" style="width: 20px; margin-right: 8px;" />
+              <label class="form-label m-0">Nombre y apellidos</label>
+            </div>
+            <input type="text" class="form-control border-bottom-only" formControlName="name"
+              [ngClass]="{'is-invalid': form.get('name')?.invalid && form.get('name')?.touched}"
+              placeholder="Juan Pérez" />
+          </div>
+
+
+          <!-- Contraseña -->
+          <div class="mb-3">
+            <div class="d-flex align-items-center mb-2">
+              <img src="assets/img/password.svg" alt="Contraseña" style="width: 20px; margin-right: 8px;" />
+              <label class="form-label m-0">Contraseña</label>
+            </div>
+            <div class="position-relative">
+              <input [type]="showPassword ? 'text' : 'password'" class="form-control border-bottom-only password-input"
+                formControlName="password" (focus)="onPasswordFocus()" (blur)="onPasswordBlur()" (input)="checkPasswordsMatch()"
+                [ngClass]="{'is-invalid': form.get('password')?.invalid && form.get('password')?.touched}"
+                placeholder="********" />
+              <img [src]="eyeIcon" alt="Mostrar contraseña" (click)="togglePassword()" class="eye-icon" />
+            </div>
+          </div>
+          
+          <!-- dropdown requisitos pass -->
+          <div class="password-requirements" [class.visible]="passwordFocused">
+            <div class="requirement" [class.satisfied]="hasUppercase" style="--index: 0">
+              <div class="bullet" *ngIf="!hasUppercase"></div>
+              <img src="assets/img/success.svg" *ngIf="hasUppercase">
+              <span>Mayúscula</span>
+            </div>
+            <div class="requirement" [class.satisfied]="hasLowercase" style="--index: 1">
+              <div class="bullet" *ngIf="!hasLowercase"></div>
+              <img src="assets/img/success.svg" *ngIf="hasLowercase">
+              <span>Minúscula</span>
+            </div>
+            <div class="requirement" [class.satisfied]="hasNumber" style="--index: 2">
+              <div class="bullet" *ngIf="!hasNumber"></div>
+              <img src="assets/img/success.svg" *ngIf="hasNumber">
+              <span>Número</span>
+            </div>
+            <div class="requirement" [class.satisfied]="hasMinLength" style="--index: 3">
+              <div class="bullet" *ngIf="!hasMinLength"></div>
+              <img src="assets/img/success.svg" *ngIf="hasMinLength">
+              <span>Al menos 8 caracteres</span>
+            </div>
+          </div>
+
+          <!-- Repetir contraseña -->
+          <div class="mb-3">
+            <div class="d-flex align-items-center mb-2">
+              <img src="assets/img/password.svg" alt="Contraseña" style="width: 20px; margin-right: 8px;" />
+              <label class="form-label m-0">Repetir contraseña</label>
+            </div>
+            <div class="position-relative">
+              <input [type]="showRepeatPassword ? 'text' : 'password'"
+                class="form-control border-bottom-only password-input" formControlName="repeatPassword"
+                (input)="checkPasswordsMatch()"
+                [ngClass]="{'is-invalid': form.get('repeatPassword')?.touched && !passwordsMatch, 'is-valid': form.get('repeatPassword')?.value && passwordsMatch}"
+                placeholder="********" />
+              <img [src]="eyeIconRepeat" alt="Mostrar contraseña" (click)="toggleRepeatPassword()" class="eye-icon" />
+            </div>
+          </div>
+          
+          <!-- Botón -->
+          <button type="submit" class="btn btn-primary w-100 mb-3 btn-pill" [disabled]="!form.valid">Registrarte</button>
+
+          <!-- Ir a login -->
+          <p class="text-center mb-0">
+            ¿Ya tienes cuenta?
+            <a routerLink="/auth/sign-in" class="link text-decoration-none fw-bold">Inicia sesión aquí</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fondo -->
+  <svg style="position: absolute; bottom: 0; left: 0; width: 100%; z-index: -1;">
+    <use xlink:href="assets/img/fondo.svg#fondo"></use>
+  </svg>
+</div>
+
+<!-- modal de alerta -->
+<div class="modal-backdrop fade show" *ngIf="showAlert" style="z-index: 1050;"></div>
+<div class="modal fade show d-block" tabindex="-1" *ngIf="showAlert" style="z-index: 1060;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Error de validaci&oacute;n</h5>
+        <button type="button" class="btn-close" (click)="closeAlert()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Las contrase&ntilde;as no coinciden. Por favor, verifique e intente nuevamente.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="closeAlert()">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fondo con olas -->
+<div class="fondo-olas">
+  <div class="imagenFondo imagenFondo-secundaria"></div>
+  <div class="imagenFondo"></div>
+</div>

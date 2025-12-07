@@ -1,0 +1,72 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div *ngIf="message" class="alert alert-success alert-dismissible">
+    {{ message }}
+    <button type="button" class="close" aria-label="Cerrar" (click)="message = ''">
+        &times;
+    </button>
+</div>
+<div *ngIf="error" class="alert alert-danger alert-dismissible">
+    {{ error }}
+    <button type="button" class="close" aria-label="Cerrar" (click)="error = ''">
+        &times;
+    </button>
+</div>
+<div class="container py-4">
+
+    <h2>{{ lista?.nombre }}</h2>
+    <h4>{{ local }}</h4>
+
+
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!loading && entradas.length">
+        <div *ngFor="let entrada of entradas" class="mb-3">
+            <ng-container [ngSwitch]="entrada.tipo">
+                <div *ngSwitchCase="'texto'" class="entrada-row">
+                    <label class="form-label">{{ entrada.nombre }}:</label>
+                    <div class="input-icon-wrapper">
+                        <input type="text" class="form-control" [formControlName]="entrada.orden" />
+                        <i class="bi bi-pencil input-icon"></i>
+                    </div>
+                </div>
+                <div *ngSwitchCase="'subtitulo'">
+                    <div style="font-size:18px; font-weight:600;">{{ entrada.nombre }}</div>
+                </div>
+                <div *ngSwitchCase="'observacion'" class="entrada-row">
+                    <label class="form-label">{{ entrada.nombre }}:</label>
+                    <div class="input-icon-wrapper">
+                        <textarea class="form-control" [formControlName]="entrada.orden" rows="3"></textarea>
+                        <i class="bi bi-chat-left-text input-icon"></i>
+                    </div>
+                </div>
+                <div *ngSwitchCase="'casilla'">
+                    <label>
+                        <input type="checkbox" class="glass-checkbox" [formControlName]="entrada.orden" />
+                        {{ entrada.nombre }}
+                    </label>
+                </div>
+            </ng-container>
+        </div>
+        <div class="action-buttons" *ngIf="!loading">
+            <button type="button" class="back-btn glass-btn action-btn" (click)="goBack()" aria-label="Volver">
+                <mat-icon>arrow_back</mat-icon>
+                <span>Volver</span>
+            </button>
+            <button class="btn btn-primary glass-btn action-btn" type="submit"
+                [disabled]="form.invalid || entradas.length === 0">
+                Enviar
+            </button>
+        </div>
+    </form>
+    <div *ngIf="!loading && entradas.length === 0" class="no-entradas-msg">
+        <mat-icon>info_outline</mat-icon> No hay entradas en esta lista
+    </div>
+    <div class="action-buttons" *ngIf="!loading && entradas.length === 0">
+        <button type="button" class="back-btn glass-btn action-btn" (click)="goBack()" aria-label="Volver">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Volver</span>
+        </button>
+        <button class="btn btn-primary glass-btn action-btn" type="button" disabled>
+            Enviar
+        </button>
+    </div>
+</div>

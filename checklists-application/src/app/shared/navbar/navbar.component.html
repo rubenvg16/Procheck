@@ -1,0 +1,27 @@
+<nav class="main-navbar">
+  <div class="navbar-left">
+    <button *ngIf="showBack" class="back-btn pill-back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      <span class="back-btn-text hide-on-mobile">Volver</span>
+    </button>
+  </div>
+  <div class="navbar-center">
+    <span class="navbar-title">{{ title }}</span>
+  </div>
+  <div class="navbar-right">
+    <button type="button" class="navbar-icon-btn" [routerLink]="['/usuarios']" aria-label="Administrar usuarios">
+      <i class="bi bi-person-circle"></i>
+      <span class="navbar-tooltip">Administración de usuarios</span>
+    </button>
+    <button type="button" class="navbar-icon-btn" [routerLink]="['/search']" aria-label="Consultar cambios">
+      <i class="bi bi-search"></i>
+      <span class="navbar-tooltip">Consultar cambios</span>
+    </button>
+    <button type="button" class="navbar-icon-btn" [routerLink]="['/nueva-checklist']"
+      aria-label="Añadir nueva checklist">
+      <i class="bi bi-plus-lg"></i>
+      <span class="navbar-tooltip">Nueva checklist</span>
+    </button>
+  </div>
+</nav>
+

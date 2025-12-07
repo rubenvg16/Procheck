@@ -1,0 +1,195 @@
+<app-navbar [title]="'Lista'" [showBack]="true"></app-navbar>
+
+<!-- <div class="back-button-container">
+  <button mat-button class="back-btn" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    <span>Volver</span>
+  </button>
+</div> -->
+
+<!-- Elimina el mensaje flotante superior para este error específico -->
+<div *ngIf="message && !(messageType === 'error' && message === 'El nombre de la lista no puede estar vacío.')" class="alert-message-wrapper" style="margin-bottom: 18px;">
+  <div [ngClass]="{'alert-success': messageType === 'success', 'alert-error': messageType === 'error'}" class="alert-message">
+    <ng-container *ngIf="messageType === 'success'">
+      <mat-icon>check_circle</mat-icon>
+    </ng-container>
+    <span>{{ message }}</span>
+    <div *ngIf="messageType === 'success'" class="progress-bar" [ngClass]="{'progress-bar-animate': showProgressBar}"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <h2>{{ listaNombre }}</h2>
+  <h4>{{ listaLocal }}</h4>
+ 
+  <!-- Botón de Editar (arriba de la lista) -->
+  <div class="form-buttons" *ngIf="!showEditForm">
+    <button mat-raised-button class="primary-btn" (click)="toggleEditForm()">
+      <mat-icon>edit</mat-icon>
+      Editar
+    </button>
+  </div>
+
+  <!-- Formulario para editar (arriba de la lista) -->
+  <div *ngIf="showEditForm">
+    <h3>Editar Lista</h3>
+    <form (ngSubmit)="saveLista()">
+      
+      <div>
+        <label for="nombre">Nombre</label>
+        <div class="input-icon-wrapper">
+          <input id="nombre" [(ngModel)]="lista.nombre" name="nombre" class="form-control" />
+          <i class="bi bi-list-ul input-icon"></i>
+        </div>
+        <div class="error-message" *ngIf="messageType === 'error' && message === 'El nombre de la lista no puede estar vacío.'">
+          <div class="error-content">
+            <mat-icon>sentiment_very_dissatisfied</mat-icon>
+            <span>{{ message }}</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="local">Local</label>
+        <div class="input-icon-wrapper">
+          <select id="local" [(ngModel)]="lista.local" name="local" class="form-select">
+            <option *ngFor="let local of locales" [value]="local">{{ local }}</option>
+          </select>
+          <i class="bi bi-geo-alt input-icon"></i>
+        </div>
+      </div>
+      <div>
+        <h4>Añadir Entrada</h4>
+        <div class="form-row">
+          <div class="entry-field">
+            <label for="newEntradaTipo">Tipo</label>
+            <div class="input-icon-wrapper">
+              <select [(ngModel)]="newEntrada.tipo" name="newEntradaTipo" id="newEntradaTipo" class="form-select">
+                <option value="casilla">Casilla</option>
+                <option value="texto">Texto</option>
+                <option value="observacion">Observación</option>
+                <option value="subtitulo">Subtítulo</option>
+              </select>
+              <i class="bi bi-ui-checks input-icon"></i>
+            </div>
+          </div>
+          <div class="entry-field">
+            <label for="newEntradaNombre">Nombre</label>
+            <div class="input-icon-wrapper">
+              <input [(ngModel)]="newEntrada.nombre" placeholder="Nombre" name="newEntradaNombre" id="newEntradaNombre" class="form-control" />
+              <i class="bi bi-pencil input-icon"></i>
+            </div>
+          </div>
+          <button type="button" (click)="addEntrada()" class="btn_add_entrada">
+            <mat-icon>add_box</mat-icon>
+          </button>
+        </div>
+        <div class="error-message" *ngIf="showAddEntryError">
+          <div class="error-content">
+            <mat-icon>sentiment_very_dissatisfied</mat-icon>
+            <span>{{ addEntryErrorMsg }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="modern-switch-container">
+        <div class="toggle-switch">
+          <input type="checkbox" id="switchAlta" class="toggle-input" [(ngModel)]="lista.alta" name="alta" [checked]="lista.alta">
+          <label for="switchAlta" class="toggle-label">
+            <span class="toggle-handle"></span>
+          </label>
+        </div>
+        <label class="modern-switch-label ms-3" for="switchAlta">Lista activa</label>
+      </div>
+      <div class="form-buttons">
+        <button mat-raised-button class="btn_cancelar_cambios" type="button" (click)="cancelChanges()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+        <button mat-raised-button class="btn_guardar_cambios" type="submit">
+          <mat-icon>save</mat-icon>
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Mensaje cuando no hay entradas -->
+  <div *ngIf="!loadingEntradas && (!entradas || entradas.length === 0)" class="no-entradas-msg">
+    <mat-icon>info_outline</mat-icon> No hay entradas en esta lista
+  </div>
+  
+  <table *ngIf="!loadingEntradas && entradas && entradas.length > 0">
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+      <!-- Modo Editar con drag y drop -->
+      <ng-container *ngIf="showEditForm">
+        <tr *ngFor="let entrada of entradas" cdkDrag class="entrada-row">
+          <td>
+            <div class="entrada-content">
+              <button class="btn-floating-sort" cdkDragHandle>
+                <mat-icon>drag_indicator</mat-icon>
+              </button>
+              <ng-container *ngIf="entrada.tipo === 'texto'; else checkObservacion">
+                <mat-icon>text_fields</mat-icon>
+              </ng-container>
+              <ng-template #checkObservacion>
+                <ng-container *ngIf="entrada.tipo === 'observacion'; else showTipo">
+                  <mat-icon>notes</mat-icon>
+                </ng-container>
+              </ng-template>
+              <ng-template #showTipo>
+                <ng-container *ngIf="entrada.tipo === 'casilla'; else showSubtitulo">
+                  <mat-icon>check_box</mat-icon>
+                </ng-container>
+                <ng-template #showSubtitulo>
+                  <mat-icon>subtitles</mat-icon>
+                </ng-template>
+              </ng-template>
+              <span class="entry-text">{{ entrada.nombre }}</span>
+            </div>
+          </td>
+          <td class="entrada-nombre">
+            <div class="btn-floating-container">
+              <button (click)="deleteEntrada(entrada)" class="btn-floating-delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+
+      <!-- Modo no editar sin drag y drop -->
+      <ng-container *ngIf="!showEditForm">
+        <tr *ngFor="let entrada of entradas" class="entrada-row">
+          <td>
+            <div class="entrada-content">
+              <ng-container *ngIf="entrada.tipo === 'texto'; else checkObservacion2">
+                <mat-icon>text_fields</mat-icon>
+              </ng-container>
+              <ng-template #checkObservacion2>
+                <ng-container *ngIf="entrada.tipo === 'observacion'; else showTipo2">
+                  <mat-icon>notes</mat-icon>
+                </ng-container>
+              </ng-template>
+              <ng-template #showTipo2>
+                <ng-container *ngIf="entrada.tipo === 'casilla'; else showSubtitulo2">
+                  <mat-icon>check_box</mat-icon>
+                </ng-container>
+                <ng-template #showSubtitulo2>
+                  <mat-icon>subtitles</mat-icon>
+                </ng-template>
+              </ng-template>
+              <span class="entry-text">{{ entrada.nombre }}</span>
+            </div>
+          </td>
+          <td class="entrada-nombre">
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<!-- Add dark mode toggle button -->
+<div class="position-fixed bottom-0 end-0 m-3" style="z-index: 3000;">
+  <app-darkmode-toggle></app-darkmode-toggle>
+</div>

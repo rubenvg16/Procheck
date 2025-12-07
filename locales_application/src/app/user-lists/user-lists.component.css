@@ -1,0 +1,600 @@
+/* === GLOBAL === */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background 0.4s, color 0.4s;
+}
+
+/* ===== Ajuste: texto en negro para mejor contraste ===== */
+body,
+h1, h2, h3, h4, h5, h6,
+p, label, span,
+.card, .lista-card, .header-panel,
+.connections-list .connection-item,
+.connections-list .connection-item .conn-name,
+.list-title, .list-body, .meta,
+.conn-avatar, .badge-count,
+.search-lists, .input-group-text {
+  color: #111 !important;
+}
+
+/* Mantener texto blanco en cabeceras oscuras y alertas */
+.card-header,
+.alert-message,
+body.dark-mode .card-header {
+  color: #fff !important;
+}
+
+/* Placeholder legible */
+.search-lists::placeholder {
+  color: #666 !important;
+}
+
+/* === ENCABEZADOS === */
+h2,
+h4 {
+  color: var(--color-text);
+  letter-spacing: -0.3px;
+  transition: color 0.4s;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+h4 {
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* === BOTÓN DE CERRAR SESION === */
+.btn-outline-danger {
+  background: var(--color-btn-bg);
+  border: 1.5px solid #f88792;
+  color: #dc3545;
+  box-shadow: var(--color-btn-shadow);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(130%);
+  transition:
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  margin-left: auto;
+}
+
+.btn-outline-danger mat-icon {
+  vertical-align: middle;
+  transition: color 0.22s ease;
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus {
+  background: transparent !important;
+  color: #dc3545;
+  border-color: #dc3545;
+  box-shadow:
+    0 4px 16px 0 rgba(220, 53, 69, 0.14)
+}
+
+.btn-outline-danger:hover mat-icon,
+.btn-outline-danger:focus mat-icon {
+  color: #dc3545;
+}
+
+/* === CARD DE LOCAL Y LISTA === */
+.card,
+.lista-card {
+  border-radius: 1.5rem;
+  background: var(--color-card);
+  box-shadow: var(--color-card-shadow);
+  border: 1.5px solid var(--color-card-border);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  transition: background 0.35s cubic-bezier(0.4, 0.2, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0.2, 0.2, 1),
+    transform 0.28s cubic-bezier(0.4, 0.2, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+body.dark-mode .card::before,
+body.dark-mode .lista-card::before {
+  background: none !important;
+}
+
+.card:hover {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18), 0 0 0 2px rgba(0, 173, 239, 0.10) inset;
+  transition: box-shadow 0.35s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+/* === CARD HEADER === */
+.card-header {
+  color: #fff;
+  border-radius: calc(1.5rem - 1.5px) calc(1.5rem - 1.5px) 0 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 1.5px 4px 0 rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.card-header.bg-dark {
+  background: black !important;
+}
+
+/* === GRID DE LISTAS === */
+.listas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 0 2rem;
+}
+
+/* === CARD DE LISTA (DESKTOP) === */
+.lista-card {
+  padding: 1.2rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  transition:
+    background 0.35s cubic-bezier(0.4, 0.2, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0.2, 0.2, 1),
+    transform 0.28s cubic-bezier(0.4, 0.2, 0.2, 1);
+  cursor: pointer;
+  margin: 0px 5px;
+  z-index: 2;
+}
+
+.lista-card:hover {
+  transform: scale(1.025);
+  background: var(--color-lista-card-hover);
+  box-shadow:
+    0 12px 32px 0 rgba(0, 0, 0, 0.22),
+    0 2px 8px 0 rgba(0, 0, 0, 0.12),
+    0 0 0 2px rgba(255, 255, 255, 0.30) inset;
+  z-index: 3;
+}
+
+.lista-card:focus {
+  outline: 2px solid #00ADEF;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(35, 37, 38, 0.18);
+}
+
+.list-group-item {
+  border: none;
+  padding: 0.75rem 1.5rem;
+  background: #f8f9fa;
+}
+
+.list-group-item.text-muted {
+  background: #f8f9fa;
+  color: #888;
+  font-style: italic;
+}
+
+/* === CARD DE LISTA (MOBILE: PILL) === */
+@media (max-width: 600px) {
+  .listas-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    padding: 0 0.5rem;
+  }
+
+  .lista-card {
+    border-radius: 2rem;
+    min-height: 48px;
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem;
+  }
+}
+
+/* === IMAGEN DE DESARROLLADOR === */
+img[alt="Desarrollado por"] {
+  max-height: 50px;
+  margin-top: 2rem;
+}
+
+@media (max-width: 600px) {
+  .card-header {
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+    border-radius: calc(1.5rem - 1.5px) calc(1.5rem - 1.5px) 0 0;
+  }
+}
+
+/* === BOTON MODO OSCURO === */
+.darkmode-toggle {
+  padding: 0.7rem 1.1rem;
+  border-radius: 2rem;
+  background: var(--color-darkmode-toggle-bg);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13), 0 0 0 2px rgba(255, 255, 255, 0.13) inset;
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+  color: var(--color-darkmode-toggle-color);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s, color 0.3s, transform 0.2s;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.darkmode-toggle:active {
+  transform: scale(0.95);
+}
+
+body.dark-mode .darkmode-toggle {
+  background: var(--color-darkmode-toggle-bg-dark);
+  color: var(--color-darkmode-toggle-color-dark);
+}
+
+.darkmode-toggle mat-icon {
+  transition: color 0.3s, transform 0.4s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+body.dark-mode .darkmode-toggle mat-icon {
+  color: var(--color-darkmode-toggle-icon-dark);
+  transform: rotate(180deg) scale(1.15);
+}
+
+/* ===========================
+   Modern switch (copiado mínimo del dashboard)
+   =========================== */
+.modern-switch-container {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 56px;
+  height: 32px;
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56px;
+  height: 32px;
+  border-radius: 16px;
+  background-color: #e4e4e4;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.toggle-input:checked + .toggle-label {
+  background-color: #aee7fa;
+}
+
+.toggle-handle {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #bdbdbd;
+  transition: all 0.3s;
+}
+
+.toggle-input:checked + .toggle-label .toggle-handle {
+  background-color: var(--color-accent, #00aef0);
+  left: 28px;
+}
+
+/* ===========================
+   Context menu
+   =========================== */
+.custom-context-menu {
+  position: fixed;
+  min-width: 180px;
+  background: var(--color-card, #fff);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(10,10,20,0.12);
+  z-index: 2000;
+  padding: 6px 8px;
+}
+
+.custom-context-menu .context-menu-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.12s;
+}
+
+.custom-context-menu .context-menu-item:hover {
+  background: rgba(0,0,0,0.06);
+}
+
+/* ===========================
+   Toast / alert-message
+   =========================== */
+.alert-message-wrapper {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 2200;
+}
+
+.alert-message {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.alert-success {
+  background: linear-gradient(90deg, rgba(0,173,239,0.12), rgba(0,200,150,0.08));
+  color: var(--color-text, #000);
+}
+
+.alert-error {
+  background: linear-gradient(90deg, rgba(255,80,80,0.12), rgba(255,50,50,0.06));
+  color: var(--color-text, #000);
+}
+
+.progress-bar {
+  position: absolute;
+  bottom: -6px;
+  left: 8px;
+  right: 8px;
+  height: 4px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-animate::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(0,173,239,0.8), rgba(0,173,239,0.3));
+  animation: pb 3s linear forwards;
+}
+
+@keyframes pb {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
+/* ===== Ajustes visuales para parecerse al dashboard ===== */
+.sidebar .card {
+  border-radius: 1rem;
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,250,250,0.8));
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 8px 30px rgba(15,20,30,0.04);
+}
+
+/* Lista de conexiones (sidebar) */
+.connections-list .connection-item {
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.8rem;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  text-align: left;
+  margin-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.connections-list .connection-item:hover {
+  transform: translateX(6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.connections-list .connection-item.active {
+  background: linear-gradient(90deg, rgba(0,173,239,0.10), rgba(255,255,255,0.04));
+  border-left: 4px solid var(--color-accent, #00aef0);
+  font-weight: 600;
+}
+
+.sidebar .conn-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(0,173,239,0.12), rgba(0,173,239,0.02));
+  color: var(--color-accent, #00aef0);
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+/* Badge contador */
+.connections-list .connection-item .badge-count {
+  background: rgba(0,0,0,0.05);
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+/* Header / barra superior del main */
+.header-panel {
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #ffffff, #fbfbfb);
+  box-shadow: 0 6px 18px rgba(20,20,30,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Estilo de tarjeta de lista (coincidente con dashboard) */
+.lista-card {
+  background: linear-gradient(180deg, #ffffff, #fcfcfd);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(15,20,30,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: transform .18s ease, box-shadow .18s ease;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Icono/avator dentro de cada tarjeta */
+.list-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(0,173,239,0.12), rgba(0,173,239,0.02));
+  color: var(--color-accent, #00aef0);
+  font-weight: 700;
+  font-size: 1.15rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  margin-right: 1rem;
+}
+
+/* Título y meta */
+.list-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.lista-card .meta {
+  min-width: 80px;
+  text-align: right;
+}
+
+/* Estados activo/inactivo con acento azul */
+.checklist-activa {
+  background: linear-gradient(90deg, rgba(0,173,239,0.06), rgba(255,255,255,0));
+  border: 1px solid rgba(0,173,239,0.10);
+}
+
+.checklist-inactiva {
+  background: linear-gradient(90deg, rgba(220,220,220,0.10), rgba(255,255,255,0));
+  border: 1px solid rgba(200,200,200,0.12);
+  color: #666;
+}
+
+/* Badge rojo para inactivas ( igual que dashboard pero más discreto ) */
+.inactive-badge {
+  background: #ff6b6b;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* Submenú/context menu tweaks (coherente) */
+.custom-context-menu {
+  min-width: 200px;
+  border-radius: 10px;
+  padding: 0.35rem;
+  box-shadow: 0 10px 30px rgba(10,10,20,0.12);
+}
+.custom-context-menu .context-menu-item {
+  padding: 0.6rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Responsive: mantener coherencia con dashboard */
+@media (max-width: 767px) {
+  .connections-list {
+    display: flex;
+    gap: 0.6rem;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+  }
+  .connections-list .connection-item {
+    min-width: 200px;
+    flex: 0 0 auto;
+  }
+  .header-panel {
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: stretch;
+  }
+}
+
+/* ===== Estilos para bloque de usuario en sidebar ===== */
+.user-info {
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,250,250,0.6));
+  align-items: center;
+}
+
+.user-initial {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(0,173,239,0.14), rgba(0,173,239,0.02));
+  color: var(--color-accent, #00aef0);
+  font-weight: 700;
+  font-size: 1.15rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.user-name {
+  overflow: hidden;
+  min-width: 0;
+}
+
+.user-name .fw-bold {
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ajustes responsive: reducir tamaño en pantallas pequeñas */
+@media (max-width: 600px) {
+  .user-initial {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  .user-name .fw-bold {
+    font-size: 0.9rem;
+  }
+}
+
+/* === HEADER ACCIONES === */
+.header-actions {
+  margin-top: 1.5rem; /* Add more space above the search bar */
+}

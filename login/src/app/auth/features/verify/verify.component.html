@@ -1,0 +1,13 @@
+<div class="card shadow border-0" style="border-radius: 20px; max-width: 500px; margin: 60px auto; padding: 2rem;">
+  <h2 class="fw-bold mb-4 text-center" style="font-size: 1.6rem; color: #003b78;">
+    Verificación de cuenta
+  </h2>
+  <div *ngIf="message" class="alert alert-success text-center">{{ message }}</div>
+  <div *ngIf="error" class="alert alert-danger text-center">{{ error }}</div>
+  <a routerLink="/auth/log-in" class="btn btn-link d-flex justify-content-center volverBTN btn-pill mt-3">Volver al inicio de sesión</a>
+
+  <div class="fondo-olas">
+    <div class="imagenFondo imagenFondo-secundaria"></div>
+    <div class="imagenFondo"></div>
+  </div>
+</div>

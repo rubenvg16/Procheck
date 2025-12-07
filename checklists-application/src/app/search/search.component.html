@@ -1,0 +1,172 @@
+<app-navbar [title]="'Consulta'" [showBack]="true"></app-navbar>
+<!-- <div class="dashboard-title-header mb-4 mt-4">
+  <div class="back-button-container">
+    <button class="back-btn back-btn-pill" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      <span class="back-btn-text">Volver</span>
+    </button>
+  </div>
+  <h2 class="mb-0">Consulta</h2>
+</div> -->
+
+<div class="container">
+  <!-- Subtítulo -->
+  <div style="font-size: 1.1rem; font-weight: 500; color: var(--color-text); margin-bottom: 1.5rem; font-family: 'Montserrat', sans-serif; text-align: center;">
+    Consulta de resultados por fecha, local y lista
+  </div>
+
+  <!-- Spinner de carga global -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Cargando...</div>
+  </div>
+
+  <!-- Formulario de búsqueda -->
+  <form class="row g-3" (ngSubmit)="onSearch()" style="margin:0;">
+    <!-- Primera fila: Fechas -->
+    <div class="col-md-6 col-12">
+      <label for="fechaInicio" class="form-label">Fecha Inicio</label>
+      <div class="input-icon-wrapper">
+        <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="search.fechaInicio" name="fechaInicio">
+        <i class="bi bi-calendar-event input-icon"></i>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <label for="fechaFin" class="form-label">Fecha Fin</label>
+      <div class="input-icon-wrapper">
+        <input type="date" class="form-control" id="fechaFin" [(ngModel)]="search.fechaFin" name="fechaFin">
+        <i class="bi bi-calendar-check input-icon"></i>
+      </div>
+    </div>
+    
+    <!-- Segunda fila: Local, Lista y Botón -->
+    <div class="col-md-5 col-12">
+      <label for="local" class="form-label">Local</label>
+      <div class="input-icon-wrapper">
+        <select class="form-select" id="local" [(ngModel)]="search.local" name="local" (change)="onLocalChange()">
+          <option *ngFor="let local of locales" [value]="local">{{ local }}</option>
+        </select>
+        <i class="bi bi-geo-alt input-icon"></i>
+      </div>
+    </div>
+    <div class="col-md-5 col-12">
+      <label for="lista" class="form-label">Lista</label>
+      <div class="input-icon-wrapper">
+        <select class="form-select lista-ancha" id="lista" [(ngModel)]="search.lista" name="lista">
+          <option *ngFor="let lista of listas" [value]="lista.nombre">{{ lista.nombre }}</option>
+        </select>
+        <i class="bi bi-list-ul input-icon"></i>
+      </div>
+    </div>
+    <div class="col-md-2 col-12 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary w-100 btn-buscar-ancho rounded-pill d-flex align-items-center justify-content-center">
+        <i class="bi bi-search me-2"></i>
+        Buscar
+      </button>
+    </div>
+  </form>
+
+  <!-- Resultados en tabla compacta y moderna -->
+  <div class="mt-5" *ngIf="fechas && fechas.length > 0 && tablaValores && !isLoading">
+    <h4>Resultados</h4>
+    <div class="compact-table-wrapper">
+      <table class="compact-table">
+        <thead>
+          <tr>
+            <th>Entrada</th>
+            <th *ngFor="let fecha of pagedFechas">
+              <div class="compact-fecha">
+                {{ fecha | date:'dd/MM/yyyy' }}
+                <span class="compact-hora">{{ fecha | date:'HH:mm:ss' }}</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entrada of entradas">
+            <td class="compact-entrada">{{ entrada }}</td>
+            <td *ngFor="let fecha of pagedFechas">
+              <ng-container *ngIf="getCell(entrada, fecha) as cell; else emptyCell">
+                <div class="compact-value">
+                  <ng-container *ngIf="isBoolean(cell)">
+                    <input type="checkbox" class="compact-checkbox"
+                           [checked]="cell.valor === true || cell.valor === 'true'"
+                           disabled>
+                  </ng-container>
+                  <ng-container *ngIf="!isBoolean(cell)">
+                    <ng-container *ngIf="isCheckboxEntrada(entrada); else notCheckbox">
+                      <input type="checkbox" class="compact-checkbox"
+                             [checked]="cell.valor === true || cell.valor === 'true'"
+                             disabled>
+                    </ng-container>
+                    <ng-template #notCheckbox>
+                      <ng-container *ngIf="isObservacion(entrada); else generalTextNumber">
+                        <span class="compact-observacion">
+                          {{ cell.valor || '-' }}
+                        </span>
+                      </ng-container>
+                      <ng-template #generalTextNumber>
+                        <ng-container *ngIf="isTexto(entrada, cell); else numberValue">
+                          <span class="compact-texto">
+                            {{ cell.valor || '-' }}
+                          </span>
+                        </ng-container>
+                        <ng-template #numberValue>
+                          <span class="compact-numero">
+                            {{ cell.valor !== undefined && cell.valor !== null ? cell.valor : '-' }}
+                          </span>
+                        </ng-template>
+                      </ng-template>
+                    </ng-template>
+                  </ng-container>
+                </div>
+              </ng-container>
+              <ng-template #emptyCell>
+                <span class="compact-empty">-</span>
+              </ng-template>
+            </td>
+          </tr>
+
+          <!-- Nueva fila separada para mostrar usuario por fecha -->
+          <tr class="user-row" *ngIf="entradas && entradas.length > 0">
+            <td class="compact-entrada user-label">Usuario</td>
+            <td *ngFor="let fecha of pagedFechas" class="user-cell">
+              <div class="user-cell-content">
+                <ng-container *ngIf="getUsuarioByFecha(fecha) as user; else noUser">
+                  <mat-icon class="user-icon">person</mat-icon>
+                  <span class="user-name" title="{{ user }}">{{ user }}</span>
+                </ng-container>
+                <ng-template #noUser>
+                  <span class="compact-empty">-</span>
+                </ng-template>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Paginación de fechas -->
+    <div class="pagination-controls compact-pagination">
+      <button mat-icon-button class="pag-btn" (click)="prevFechaPage()" [disabled]="fechaPage === 1">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span class="pag-text">Fechas {{ pagedFechas.length > 0 ? ((fechaPage - 1) * maxColumns + 1) : 0 }} - {{ (fechaPage - 1) * maxColumns + uniqueFechas(pagedFechas).length }} de {{ uniqueFechas(fechas).length }}</span>
+      <button mat-icon-button class="pag-btn" (click)="nextFechaPage()" [disabled]="fechaPage === totalFechaPages">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mensaje de error si no hay resultados -->
+  <div class="mt-4" *ngIf="searchExecuted && (!fechas || fechas.length === 0) && !isLoading">
+    <div class="error-message">
+      <div class="error-content">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+        <span>No se encontraron resultados.</span>
+      </div>
+      <button mat-icon-button class="close-btn" (click)="searchExecuted = false">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,393 @@
+:root {
+  --colorPrincipal: black;
+  --colorSecundario: #00adef;
+  --colorFondoClaro: #d6f2fd;
+}
+
+/* -------------------- */
+/* FUENTES PERSONALIZADAS */
+/* -------------------- */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* -------------------- */
+/* ESTILOS GENERALES */
+/* -------------------- */
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* -------------------- */
+/* TARJETAS Y LAYOUT GENERAL */
+/* -------------------- */
+.lo.card,
+.login-card {
+  border-radius: 20px;
+}
+.card-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* -------------------- */
+/* LOGO */
+/* -------------------- */
+.logo-container img {
+  max-width: 200px;
+  width: 100%;
+}
+
+/* -------------------- */
+/* FORMULARIOS */
+/* -------------------- */
+.form-container {
+  max-width: 350px;
+  width: 100%;
+}
+.form-field {
+  margin-bottom: 1.5rem;
+}
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+.full-width-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+.custom-input,
+.border-bottom-only {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  height: 38px;
+  color: #000;
+  outline: none;
+}
+.custom-input:focus,
+.border-bottom-only:focus {
+  border-bottom: 2px solid #0fb5e4;
+}
+.form-label,
+.link,
+p {
+  color: var(--colorPrincipal);
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+/* -------------------- */
+/* TÍTULOS Y TEXTOS */
+/* -------------------- */
+.title {
+  color: var(--colorPrincipal);
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+mat-card-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--colorPrincipal);
+}
+mat-card-subtitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--colorSecundario);
+  margin-bottom: 2rem;
+}
+h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--colorPrincipal);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* -------------------- */
+/* TABLA DE ENTRADAS */
+/* -------------------- */
+.entries-table {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.table-header {
+  display: flex;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem;
+}
+.table-row {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0.5rem 0.75rem;
+  align-items: center;
+}
+.table-row:last-child {
+  border-bottom: none;
+}
+.column {
+  padding: 0.25rem;
+}
+.tipo-col {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nombre-col {
+  width: 75%;
+}
+.actions-col {
+  width: 15%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* -------------------- */
+/* TABLA DE BÚSQUEDA */
+/* -------------------- */
+.search-results-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.search-results-table th,
+.search-results-table td {
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.search-results-table th:first-child,
+.search-results-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+/* -------------------- */
+/* FORMULARIO PARA AÑADIR ENTRADAS */
+/* -------------------- */
+.add-entry-section {
+  margin-top: 1.5rem;
+}
+.entry-form-row {
+  display: flex;
+  gap: 1rem;
+}
+.nombre-field {
+  flex: 2;
+}
+.tipo-field {
+  flex: 1;
+}
+.entry-warning {
+  color: #e53935;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  text-align: right;
+}
+.add-entry-btn {
+  margin-top: 1rem;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  min-width: unset;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+}
+.add-entry-btn mat-icon {
+  font-size: 24px;
+}
+
+/* -------------------- */
+/* BOTONES Y ACCIONES */
+/* -------------------- */
+.btn-pill {
+  border-radius: 50px;
+}
+.btn-primary {
+  background-color: var(--colorSecundario);
+  border-color: var(--colorSecundario);
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #0095c7;
+  border-color: #0095c7;
+}
+button.mat-icon-button {
+  color: #757575;
+}
+button.mat-icon-button[color="warn"] {
+  color: #e53935;
+}
+.drag-button {
+  cursor: move;
+}
+
+/* -------------------- */
+/* ÍCONO DE OJO (PASSWORD) */
+/* -------------------- */
+.eye-icon {
+  width: 20px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* -------------------- */
+/* FONDO DEL LOGIN */
+/* -------------------- */
+.fondo-olas {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 200px; /* Increased from 160px to 200px */
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.imagenFondo {
+  width: 200%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 140px;
+  z-index: 1;
+  background-color: var(--colorPrincipal);
+  -webkit-mask-image: url('assets/img/wave-seamless.svg');
+  mask-image: url('assets/img/wave-seamless.svg');
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  animation: wave-bg-move 30s linear infinite;
+}
+
+.imagenFondo-secundaria {
+  width: 200%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  height: 200px;
+  background-color: var(--colorSecundario);
+  -webkit-mask-image: url('assets/img/wave-seamless.svg');
+  mask-image: url('assets/img/wave-seamless.svg');
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  animation: wave-bg-move-secondary 40s linear infinite;
+}
+
+@keyframes wave-bg-move {
+  0% {
+    -webkit-mask-position-x: 0;
+    mask-position-x: 0;
+  }
+  100% {
+    -webkit-mask-position-x: -1440px;
+    mask-position-x: -1440px;
+  }
+}
+
+@keyframes wave-bg-move-secondary {
+  0% {
+    -webkit-mask-position-x: -720px;
+    mask-position-x: -720px;
+  }
+  100% {
+    -webkit-mask-position-x: 720px;
+    mask-position-x: 720px;
+  }
+}
+
+/* -------------------- */
+/* CUSTOM CHECKBOX */
+/* -------------------- */
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: blue;
+}
+
+/* -------------------- */
+/* ICONOS DE INFORMACIÓN Y TEXTO */
+/* -------------------- */
+.info-icon,
+.text-icon {
+  color: black;
+  cursor: default;  /* Cambiado de 'help' a 'default' */
+  font-size: 20px;
+  vertical-align: middle;
+  padding: 4px;
+  border-radius: 4px;
+  user-select: none;  /* Previene la selección del texto */
+  pointer-events: none;  /* El icono no responde a eventos del mouse */
+}
+
+.tooltip-text {
+  max-width: 300px;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.4;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 4px;
+}

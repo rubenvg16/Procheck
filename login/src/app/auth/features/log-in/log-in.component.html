@@ -1,0 +1,87 @@
+<div class="position-relative min-vh-100 d-flex justify-content-center align-items-center">
+
+  <!-- Card -->
+  <div class="card shadow border-0" style="border-radius: 20px; width: auto; max-width: 700px;">
+    <div class="row g-0 align-items-center">
+      <div class="col-auto text-center px-5 py-5">
+        <div class="bartolome-logo-animated">
+          <img src="/assets/img/Logo.png" alt="Logo Bartolome" class="logo-img">
+        </div>
+      </div>
+
+      <!-- Columna del Form (más espacio) -->
+      <div class="col px-5 py-5">
+        <!-- Título -->
+        <h2 class="fw-bold mb-4 text-center" style="font-size: 1.6rem; color: black;">
+          ¡Bienvenido de nuevo!
+        </h2>
+
+        <div *ngIf="error" class="alert-error">
+          <span class="alert-error__icon">!</span>
+          Correo electrónico o contraseña incorrectos
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+
+          <!-- Campo Correo -->
+          <div class="mb-3">
+            <div class="d-flex align-items-center mb-2">
+              <img src="assets/img/mail.svg" alt="Correo" style="width: 20px; margin-right: 8px;" />
+              <label class="form-label m-0">Correo electrónico</label>
+            </div>
+            <input type="email" class="form-control border-bottom-only" formControlName="email"
+              [ngClass]="{'is-invalid': form.get('email')?.invalid && form.get('email')?.touched}"
+              placeholder="example@gmail.com" />
+          </div>
+
+          <!-- Campo Contraseña -->
+          <div class="mb-3">
+            <div class="d-flex align-items-center mb-2">
+              <img src="assets/img/password.svg" alt="Contraseña" style="width: 20px; margin-right: 8px;" />
+              <label class="form-label m-0">Contraseña</label>
+            </div>
+            <div class="position-relative">
+              <input [type]="showPassword ? 'text' : 'password'" class="form-control border-bottom-only password-input"
+                formControlName="password"
+                [ngClass]="{'is-invalid': form.get('password')?.invalid && form.get('password')?.touched}"
+                placeholder="********" />
+              <img [src]="eyeIcon" alt="Mostrar contraseña" (click)="togglePassword()" class="eye-icon" />
+            </div>
+          </div>
+
+          <!-- Olvidaste contraseña -->
+          <div class="mb-3 text-end">
+            <a routerLink="/auth/forgot-password" class="link forgot-password text-decoration-none fw-bold">
+              ¿Has olvidado tu contraseña?
+            </a>
+          </div>
+
+          <!-- Botón -->
+          <button class="btn btn-primary w-100 mb-3 btn-pill">
+            Iniciar sesión
+          </button>
+
+          <!-- Registro -->
+          <p class="text-center mb-0">
+            ¿No tienes cuenta?
+            <a routerLink="/auth/sign-up" class="link text-decoration-none fw-bold">Regístrate aquí</a>
+          </p>
+        </form>
+        <!-- Botón de Google Login -->
+        <div class="mt-4 text-center">
+          <a href="http://localhost:3000/auth/google" class="btn btn-outline-primary w-100 btn-pill"
+            style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #111; background: #fff; border: 1.5px solid #000;">
+            <img src="assets/img/google.svg" alt="Google" style="width: 20px; height: 20px;">
+            Iniciar sesión con Google
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fondo con olas -->
+  <div class="fondo-olas">
+    <div class="imagenFondo imagenFondo-secundaria"></div>
+    <div class="imagenFondo"></div>
+  </div>
+</div>

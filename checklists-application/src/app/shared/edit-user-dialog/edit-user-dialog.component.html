@@ -1,0 +1,67 @@
+<div class="edit-dialog-container">
+  <div class="edit-dialog-header">
+    <mat-icon class="user-icon">person_outline</mat-icon>
+    <h2 mat-dialog-title>Editar Usuario</h2>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <mat-dialog-content class="edit-dialog-content">
+    <form [formGroup]="userForm">
+      <!-- Campo de usuario (deshabilitado) -->
+      <div class="form-field">
+        <div class="input-icon-wrapper">
+          <input class="form-control" formControlName="usuario" placeholder="Nombre de Usuario" readonly>
+          <i class="bi bi-person input-icon"></i>
+        </div>
+      </div>
+
+      <!-- Selector de local -->
+      <div class="form-field">
+        <div class="input-icon-wrapper">
+          <select class="form-select" formControlName="local">
+            <option *ngFor="let conexion of data.conexiones" [value]="conexion.nombreConexion">
+              {{ conexion.nombreConexion }}
+            </option>
+          </select>
+          <i class="bi bi-geo-alt input-icon"></i>
+          <i class="bi bi-chevron-down input-icon" style="right: 1rem; left: auto; pointer-events: none;"></i>
+        </div>
+        <div class="error-message" *ngIf="userForm.get('local')?.invalid && userForm.get('local')?.touched">
+          <mat-icon>error</mat-icon>
+          <span>Debe seleccionar un local</span>
+        </div>
+      </div>
+
+      <!-- Campo de contraseña -->
+      <div class="form-field">
+        <div class="input-icon-wrapper">
+          <input class="form-control" type="password" formControlName="contrasena" placeholder="Nueva Contraseña">
+          <i class="bi bi-lock input-icon"></i>
+        </div>
+        <div class="error-message" *ngIf="userForm.get('contrasena')?.invalid && userForm.get('contrasena')?.touched">
+          <mat-icon>error</mat-icon>
+          <span *ngIf="userForm.get('contrasena')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</span>
+        </div>
+      </div>
+
+      <!-- Mensaje de error general -->
+      <div class="error-message" *ngIf="errorMessage">
+        <mat-icon>error</mat-icon> {{ errorMessage }}
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="edit-dialog-actions">
+    <button mat-button class="cancel-button" (click)="onCancelClick()">
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+    <button mat-raised-button color="primary" class="save-button" (click)="onSaveClick()" [disabled]="userForm.invalid">
+      <mat-icon>save</mat-icon>
+      Guardar Cambios
+    </button>
+  </mat-dialog-actions>
+</div>

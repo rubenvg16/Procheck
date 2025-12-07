@@ -1,0 +1,124 @@
+<app-navbar [title]="'Crear nueva lista'" [showBack]="true"></app-navbar>
+
+
+<mat-card class="card-container">
+  <mat-card-subtitle>Lista</mat-card-subtitle>
+
+  <mat-card-content>
+    <!-- Formulario reorganizado -->
+    <form [formGroup]="addEntryForm" class="add-entry-form">
+      <!-- Primera fila: Local y Nombre de la Lista -->
+      <div class="form-row">
+        <div class="entry-field">
+          <label for="conexion">Locales</label>
+          <div class="input-icon-wrapper">
+            <div class="custom-multi-select">
+              <div class="select-header" (click)="toggleDropdown()">
+                <span *ngIf="selectedConexiones.length === 0">Selecciona locales</span>
+                <span *ngIf="selectedConexiones.length === 1">1 local seleccionado</span>
+                <span *ngIf="selectedConexiones.length > 1">{{ selectedConexiones.length }} locales seleccionados</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+              </div>
+              <div class="select-dropdown" [class.open]="isDropdownOpen">
+                <div class="select-options">
+                  <div *ngFor="let conexion of conexiones" class="select-option" (click)="toggleConexion(conexion.nombreConexion)">
+                    <div class="checkbox">
+                      <i *ngIf="isSelected(conexion.nombreConexion)" class="bi bi-check-square-fill"></i>
+                      <i *ngIf="!isSelected(conexion.nombreConexion)" class="bi bi-square"></i>
+                    </div>
+                    <span>{{ conexion.nombreConexion }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <i class="bi bi-geo-alt input-icon"></i>
+          </div>
+        </div>
+        <div class="entry-field">
+          <label for="nombreLista">Nombre de la Lista</label>
+          <div class="input-icon-wrapper">
+            <input class="form-control" id="nombreLista" formControlName="nombreLista" placeholder="Lista 1">
+            <i class="bi bi-list-ul input-icon"></i>
+          </div>
+        </div>
+      </div>
+      <div class="error-message" *ngIf="listNameError">
+        <div class="error-content">
+          <mat-icon>sentiment_very_dissatisfied</mat-icon>
+          <span>{{ listNameError }}</span>
+        </div>
+      </div>
+
+      <h3>Agregar Entrada</h3>
+      <!-- Segunda fila: Tipo y Nombre de la Entrada -->
+      <div class="form-row">
+        <div class="entry-field">
+          <label for="tipo">Tipo</label>
+          <div class="input-icon-wrapper">
+            <select class="form-select" id="tipo" formControlName="tipo">
+              <option *ngFor="let option of tipoOptions" [value]="option.value">
+                {{ option.viewValue }}
+              </option>
+            </select>
+            <i class="bi bi-ui-checks input-icon"></i>
+          </div>
+        </div>
+        <div class="entry-field">
+          <label for="nombreEntrada">Nombre</label>
+          <div class="input-icon-wrapper">
+            <input class="form-control" id="nombreEntrada" formControlName="nombre" placeholder="Entrada">
+            <i class="bi bi-pencil input-icon"></i>
+          </div>
+        </div>
+        <button mat-icon-button class="agregar-btn-fab" type="button" (click)="onAddEntryClick()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="error-message" *ngIf="showAddEntryError">
+        <div class="error-content">
+          <mat-icon>sentiment_very_dissatisfied</mat-icon>
+          <span>Por favor, complete ambos campos para añadir una entrada.</span>
+        </div>
+      </div>
+      <div class="error-message" *ngIf="duplicateError">
+        <div class="error-content">
+          <mat-icon>sentiment_very_dissatisfied</mat-icon>
+          <span>{{ duplicateError }}</span>
+        </div>
+      </div>
+    </form>
+
+    <h3>Entradas</h3>
+    <div class="error-message" *ngIf="entriesError">
+      <div class="error-content">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+        <span>{{ entriesError }}</span>
+      </div>
+    </div>
+    <div cdkDropList [cdkDropListData]="entradas" (cdkDropListDropped)="drop($event)" class="entry-list">
+      <div *ngFor="let entrada of entradas; let i = index" cdkDrag class="entry-item">
+        <span cdkDragHandle class="btn-floating-sort drag-handle">
+          <mat-icon>drag_indicator</mat-icon>
+        </span>
+        <mat-icon class="entry-icon">{{ iconMapping[entrada.tipo] }}</mat-icon>
+        <div class="entry-text">
+          {{ entrada.nombre }}
+        </div>
+        <button mat-icon-button color="warn" (click)="removeEntrada(i)">
+          <mat-icon class="delIcon">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="card-actions">
+    <button type="button" class="cancelar-btn" (click)="goBack()" [disabled]="isLoading">
+      <mat-icon>close</mat-icon>
+      <span>Cancelar</span>
+    </button>
+    <button type="button" class="guardar-btn" (click)="onSubmit()">
+      <mat-icon>save</mat-icon>
+      <span>Guardar</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

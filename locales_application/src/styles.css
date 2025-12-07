@@ -1,0 +1,191 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* ========================== */
+/* Variables */
+/* ========================== */
+
+:root {
+  --color-bg: #faf9f9;
+  --color-card: rgba(255, 255, 255, 0.28);
+  --color-card-border: rgba(255, 255, 255, 0.38);
+  --color-card-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.10), 0 0 0 2px rgba(255, 255, 255, 0.18) inset;
+  --color-text: #222;
+  --color-header-gradient: #232526;
+  --color-lista-card-hover: rgba(255, 255, 255, 0.60);
+  --color-btn-bg: rgba(255, 255, 255, 0.12);
+  --color-btn-border: rgba(255, 255, 255, 0.2);
+  --color-btn-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+  --color-btn-primary: #00ADEF;
+  --color-btn-primary-hover: rgba(0, 173, 239, 0.18);
+  --color-darkmode-toggle-bg: rgba(255, 255, 255, 0.18);
+  --color-darkmode-toggle-color: #222;
+  --color-darkmode-toggle-bg-dark: rgba(30, 34, 40, 0.38);
+  --color-darkmode-toggle-color-dark: #f3f3f3;
+  --color-darkmode-toggle-icon-dark: #ffe066;
+  --colorPrincipal: black;
+  --colorSecundario: #00adef;
+  --color-loading: #212529;
+   --colorFondoClaro: #d6f2fd;
+}
+
+body.dark-mode {
+  --color-bg: #181a1b;
+  --color-card: #212529;
+  --color-card-border: #343a40;
+  --color-card-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.28), 0 0 0 2px #212529 inset;
+  --color-text: #e0e6ed;
+  --color-header-gradient: linear-gradient(270deg, #232526 0%, #212529 100%);
+  --color-lista-card-hover: #343a40;
+  --color-btn-bg: #212529;
+  --color-btn-border: #343a40;
+  --color-btn-shadow: 0 4px 12px rgba(0, 0, 0, 0.28), 0 0 0 1px #212529 inset;
+  --color-btn-primary: #00ADEF;
+  --color-btn-primary-hover: #343a40;
+  --color-darkmode-toggle-bg: #212529;
+  --color-darkmode-toggle-color: #e0e6ed;
+  --color-darkmode-toggle-bg-dark: #212529;
+  --color-darkmode-toggle-color-dark: #e0e6ed;
+  --color-darkmode-toggle-icon-dark: #ffe066;
+  --color-loading: #efefef;
+}
+
+
+
+body.dark-mode .text-muted {
+  color: #b0b3b8 !important;
+}
+
+body.dark-mode .bg-dark {
+  background: transparent !important;
+}
+
+body.dark-mode .card .card-header.bg-dark {
+  background: #00ADEF !important;
+  border: 1.5px solid #00ADEF !important;
+  box-shadow: 0 0 8px 1.5px #00ADEF66, 0 0 0 2px #00ADEF33 inset !important;
+  color: #fefefe !important;
+  filter: drop-shadow(0 0 6px #00ADEF88);
+  border-radius: calc(1.5rem - 1.5px) calc(1.5rem - 1.5px) 0 0 !important;
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+
+/* ========================== */
+/* Fuentes */
+/* ========================== */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* ========================== */
+/* Estilos Generales */
+/* ========================== */
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body.dark-mode {
+  background-color: var(--color-bg);
+}
+
+/* -------------------- */
+/* FONDO DEL LOGIN */
+/* -------------------- */
+.fondo-olas {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 200px; /* Increased from 160px to 200px */
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.imagenFondo {
+  width: 200%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 140px;
+  z-index: 1;
+  background-color: var(--colorPrincipal);
+  -webkit-mask-image: url('/assets/img/wave-seamless.svg');
+  mask-image: url('/assets/img/wave-seamless.svg');
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  animation: wave-bg-move 30s linear infinite;
+}
+
+.imagenFondo-secundaria {
+  width: 200%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  height: 200px;
+  background-color: var(--colorSecundario);
+  -webkit-mask-image: url('/assets/img/wave-seamless.svg');
+  mask-image: url('/assets/img/wave-seamless.svg');
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  animation: wave-bg-move-secondary 40s linear infinite;
+}
+
+@keyframes wave-bg-move {
+  0% {
+    -webkit-mask-position-x: 0;
+    mask-position-x: 0;
+  }
+  100% {
+    -webkit-mask-position-x: -1440px;
+    mask-position-x: -1440px;
+  }
+}
+
+@keyframes wave-bg-move-secondary {
+  0% {
+    -webkit-mask-position-x: -720px;
+    mask-position-x: -720px;
+  }
+  100% {
+    -webkit-mask-position-x: 720px;
+    mask-position-x: 720px;
+  }
+}

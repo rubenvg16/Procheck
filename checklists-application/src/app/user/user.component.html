@@ -1,0 +1,121 @@
+<app-navbar [title]="'Administración de Usuarios'" [showBack]="true"></app-navbar>
+
+<div *ngIf="message" class="alert-message-wrapper" [class.fade-out]="fadeOutMessage">
+  <div [ngClass]="{'alert-success': messageType === 'success', 'alert-error': messageType === 'error'}" class="alert-message">
+    <ng-container *ngIf="messageType === 'success'">
+      <mat-icon>check_circle</mat-icon>
+    </ng-container>
+    <ng-container *ngIf="messageType === 'error'">
+      <mat-icon>error</mat-icon>
+    </ng-container>
+    <span>{{ message }}</span>
+    <!-- Progress bar para mensajes de éxito -->
+    <div *ngIf="messageType === 'success'" class="progress-bar" [ngClass]="{'progress-bar-animate': showProgressBar}"></div>
+  </div>
+</div>
+
+<mat-card class="card-container">
+  <mat-card-content>
+    <!-- Tabla de usuarios existentes -->
+    <h3 class="usuarios-existentes-title">Usuarios existentes</h3>
+    <div class="table-container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Local</th>
+            <th class="actions-column">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td class="usuario-cell">
+              <div class="usuario-cell-content">
+                <mat-icon class="usuario-icon">person</mat-icon>
+                <span class="usuario-name" title="{{ user.usuario }}">{{ user.usuario }}</span>
+              </div>
+            </td>
+            <td>{{ user.local }}</td>
+            <td class="actions-column">
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" (click)="editUser(user)" matTooltip="Editar usuario">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteUser(user)" matTooltip="Eliminar usuario">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Mensaje cuando no hay usuarios -->
+      <div class="no-data-message" *ngIf="users.length === 0">
+        No hay usuarios registrados
+      </div>
+    </div>
+
+    <!-- Formulario para crear usuarios -->
+    <h3>Nuevo Usuario</h3>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+      <div class="form-row">
+        <div class="form-field">
+          <div class="input-icon-wrapper">
+            <input class="form-control" formControlName="usuario" placeholder="Nombre de Usuario">
+            <i class="bi bi-person input-icon"></i>
+          </div>
+          <div class="error-message" *ngIf="userForm.get('usuario')?.invalid && (userForm.get('usuario')?.touched || formSubmitted)">
+            <div class="error-content">
+              <mat-icon>sentiment_very_dissatisfied</mat-icon>
+              <span *ngIf="userForm.get('usuario')?.errors?.['required']">El nombre de usuario es obligatorio</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="input-icon-wrapper">
+            <select class="form-select" formControlName="local">
+              <option *ngFor="let conexion of conexiones" [value]="conexion.nombreConexion">
+                {{ conexion.nombreConexion }}
+              </option>
+            </select>
+            <i class="bi bi-geo-alt input-icon"></i>
+          </div>
+          <div class="error-message" *ngIf="userForm.get('local')?.invalid && (userForm.get('local')?.touched || formSubmitted)">
+            <div class="error-content">
+              <mat-icon>sentiment_very_dissatisfied</mat-icon>
+              <span>Debe seleccionar un local</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-field">
+        <div class="input-icon-wrapper">
+          <input class="form-control" type="password" formControlName="contrasena" placeholder="Contraseña">
+          <i class="bi bi-lock input-icon"></i>
+        </div>
+        <div class="error-message" *ngIf="userForm.get('contrasena')?.invalid && (userForm.get('contrasena')?.touched || formSubmitted)">
+          <div class="error-content">
+            <mat-icon>sentiment_very_dissatisfied</mat-icon>
+            <span *ngIf="userForm.get('contrasena')?.errors?.['required']">La contraseña es obligatoria</span>
+          </div>
+        </div>
+      </div>
+      <div class="error-message" *ngIf="formError">
+        <div class="error-content">
+          <mat-icon>sentiment_very_dissatisfied</mat-icon>
+          <span>{{ formError }}</span>
+        </div>
+      </div>
+
+      <!-- Botón de acción (solo envío) -->
+      <div class="form-actions">
+        <button mat-raised-button class="primary-btn" type="submit">
+          <mat-icon>person_add</mat-icon>
+          Crear Usuario
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

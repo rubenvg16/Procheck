@@ -1,0 +1,5 @@
+<svg id='iconoWarning' viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M36 64C51.464 64 64 51.464 64 36C64 20.536 51.464 8 36 8C20.536 8 8 20.536 8 36C8 51.464 20.536 64 36 64ZM36 68C53.6731 68 68 53.6731 68 36C68 18.3269 53.6731 4 36 4C18.3269 4 4 18.3269 4 36C4 53.6731 18.3269 68 36 68Z"  fill="#FFF"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M37 15.75C38.1046 15.75 39 16.6454 39 17.75L39 46.25C39 47.3546 38.1046 48.25 37 48.25C35.8954 48.25 35 47.3546 35 46.25L35 17.75C35 16.6454 35.8954 15.75 37 15.75Z" fill="#FFF"/>
+<circle cx="37" cy="54" r="2"  fill="#FFF"/>
+</svg>

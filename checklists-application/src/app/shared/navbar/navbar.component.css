@@ -1,0 +1,326 @@
+.main-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  padding: 0 2rem;
+  background: var(--color-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background 0.2s, color 0.2s;
+}
+
+body.dark-mode .main-navbar {
+  background: var(--color-black);
+  color: var(--color-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.navbar-left,
+.navbar-center,
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left,
+.navbar-right {
+  min-width: 160px;
+  justify-content: flex-start;
+}
+
+.navbar-center {
+  flex: 1;
+  justify-content: center;
+}
+
+.navbar-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-primary);
+  line-height: 1.2;
+  padding: 0.2em 0;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
+  max-width: 100%;
+  display: block;
+  margin-left: 38px;
+}
+
+body.dark-mode .navbar-title {
+  color: #00ADEF !important;
+}
+
+.navbar-right>button {
+  margin-left: 0.7em;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.navbar-right>button.btn.rounded-circle {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.navbar-right>button.btn.rounded-circle i,
+.navbar-right>button.btn.rounded-circle mat-icon {
+  font-size: 1.5rem;
+  margin: 0;
+  line-height: 1;
+}
+
+.navbar-right .navbar-icon-btn {
+  position: relative;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0 8px;
+  margin-left: 0.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar-right .navbar-icon-btn i {
+  color: #00ADEF;
+  font-size: 1.7rem;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.navbar-right .navbar-icon-btn:hover i,
+.navbar-right .navbar-icon-btn:focus i {
+  color: #007bb8;
+  transform: scale(1.13);
+}
+
+.navbar-icon-btn {
+  position: relative;
+}
+
+.navbar-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%) translateY(0);
+  background: #222;
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  white-space: pre-line;
+  max-width: 220px;
+  box-sizing: border-box;
+  pointer-events: none;
+  transition: opacity 0.18s, visibility 0.18s, transform 0.18s;
+  z-index: 9999;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  word-break: normal;
+  text-align: center;
+}
+
+.navbar-icon-btn:hover .navbar-tooltip,
+.navbar-icon-btn:focus .navbar-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(8px);
+}
+
+.pill-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border: none;
+  border-radius: 50px;
+  padding: 8px 22px 8px 16px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  min-width: 0;
+  margin-left: 8px;
+}
+
+.pill-back-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.pill-back-btn:hover {
+  background-color: var(--color-hover);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pill-back-btn mat-icon {
+  font-size: 22px;
+  margin-right: 6px;
+}
+
+.back-btn-text {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-white);
+}
+
+body.dark-mode .pill-back-btn,
+body.dark-mode .back-btn-text {
+  background-color: var(--color-secondary);
+  color: var(--color-black);
+}
+
+.hide-on-mobile {
+  display: inline;
+}
+
+@media (max-width: 600px) {
+  .main-navbar {
+    padding: 0 0.7rem;
+    min-height: 54px;
+    overflow-x: hidden;
+  }
+
+  .navbar-title {
+    font-size: 1.05rem;
+    line-height: 1.15;
+    padding: 0.25em 0.1em;
+    max-width: 90vw;
+  }
+
+  .pill-back-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    border-radius: 50% !important;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .pill-back-btn mat-icon {
+    margin-right: 0;
+  }
+
+  .navbar-right>button.btn.rounded-circle {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .navbar-right>button.btn.rounded-circle i,
+  .navbar-right>button.btn.rounded-circle mat-icon {
+    font-size: 1.3rem;
+  }
+
+  .navbar-right .navbar-icon-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    justify-content: center;
+  }
+
+  .navbar-right .navbar-icon-btn .nav-btn-label {
+    display: none !important;
+  }
+
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  .navbar-tooltip {
+    display: none !important;
+  }
+
+  .navbar-left,
+  .navbar-right {
+    min-width: 36px !important;
+  }
+
+  .main-navbar {
+    padding: 0 0.2rem;
+    overflow-x: hidden;
+  }
+
+  .listas-grid {
+    padding: 0 0.5rem;
+  }
+
+  .darkmode-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 3000;
+  }
+}
+
+@media (max-width: 400px) {
+  .main-navbar {
+    padding: 0 0.1rem !important;
+    overflow-x: hidden;
+  }
+  .navbar-left,
+  .navbar-right {
+    min-width: 0 !important;
+    width: auto !important;
+  }
+  .navbar-title {
+    font-size: 0.93rem;
+    line-height: 1.12;
+    padding: 0.18em 0.05em;
+    max-width: 80vw;
+  }
+  .listas-grid {
+    padding: 0 0.1rem !important;
+  }
+}
+
+.darkmode-toggle {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 3001;
+  display: block !important;
+}
+
+@media (max-width: 900px) {
+  .darkmode-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+    display: block !important;
+  }
+}
