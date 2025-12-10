@@ -51,6 +51,21 @@ export default class DashboardComponent implements OnInit, OnDestroy {
   inactiveLists: number = 0;
   recentActivities: { title: string; subtitle?: string; when?: string }[] = [];
 
+  // Nuevo: menú de usuario en el navbar
+  showUserMenu: boolean = false;
+  userEmail: string = '';
+
+  // Logo load fallback: prueba varias rutas hasta que una funcione
+  logoCandidates: string[] = [
+    'assets/img/logo_sin_texto.png',
+    'assets/logo_sin_texto.png',
+    'assets/img/Logo.png',
+    'assets/img/Logo.png' // uno extra por si acaso
+  ];
+  logoIndex = 0;
+  logoSrc = this.logoCandidates[0];
+  showLogo = true;
+
   constructor(
     private dashboardService: DashboardService, 
     private authStateService: AuthStateService,
@@ -61,16 +76,21 @@ export default class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       const checklistsData = data['checklists'];
+      console.log('Datos recibidos del resolver:', checklistsData);
+      
       // Si el backend devuelve un error o un array vacío
       if (
         (Array.isArray(checklistsData) && checklistsData.length === 0) ||
         (checklistsData && typeof checklistsData === 'object' && checklistsData.error)
       ) {
+        console.error('Error en checklists:', checklistsData?.error || 'Sin datos');
         this.noConexiones = true;
         this.checklistPorConexion = [];
+        this.showErrorMessage('No se encontraron conexiones. Contacta al administrador.');
       } else if (Array.isArray(checklistsData)) {
         this.noConexiones = false;
         this.checklistPorConexion = checklistsData;
+        console.log('Conexiones cargadas:', this.checklistPorConexion);
         // Inicializar el estado de expansión para cada conexión
         this.checklistPorConexion.forEach(conexion => {
           conexion.isExpanded = false;
@@ -80,11 +100,11 @@ export default class DashboardComponent implements OnInit, OnDestroy {
           this.selectConexion(0);
         }
       } else {
-        // fallback defensivo
         this.noConexiones = true;
         this.checklistPorConexion = [];
+        this.showErrorMessage('Formato de datos inválido');
       }
-      // Después de asignar checklistPorConexion:
+      
       this.updateStats();
       this.isLoading = false;
     });
@@ -99,15 +119,20 @@ export default class DashboardComponent implements OnInit, OnDestroy {
       }
     });
 
+    // Load user email and add listeners
+    this.parseUserFromToken();
     document.addEventListener('click', this.closeContextMenuBound);
+    document.addEventListener('click', this.closeUserMenuBound);
   }
 
   ngOnDestroy() {
     document.removeEventListener('click', this.closeContextMenuBound);
+    document.removeEventListener('click', this.closeUserMenuBound);
   }
 
   // Necesario para remover correctamente el listener
   private closeContextMenuBound = () => this.closeContextMenu();
+  private closeUserMenuBound = () => this.closeUserMenu();
 
   toggleConexion(index: number): void {
     this.checklistPorConexion[index].isExpanded = !this.checklistPorConexion[index].isExpanded;
@@ -159,11 +184,85 @@ export default class DashboardComponent implements OnInit, OnDestroy {
     }));
   }
 
+  // Manejo del menú de usuario
+  toggleUserMenu(event: MouseEvent): void {
+    event.stopPropagation(); // evitar cierre inmediato por listener global
+    this.showUserMenu = !this.showUserMenu;
+  }
+
+  closeUserMenu() {
+    this.showUserMenu = false;
+  }
+
+  // Handler: cambia el src a la alternativa si la primera falla (cicla)
+  onLogoError(event: any): void {
+    // event target is the img element
+    try {
+      const img: HTMLImageElement = event?.target;
+      if (!img) return;
+      this.logoIndex++;
+      if (this.logoIndex < this.logoCandidates.length) {
+        img.src = this.logoCandidates[this.logoIndex];
+      } else {
+        // Ocultar si no hay más candidatos
+        this.showLogo = false;
+      }
+    } catch (e) {
+      // no-op
+      this.showLogo = false;
+    }
+  }
+
+  // Extraer email del token (JWT) si está disponible en localStorage
+  private parseUserFromToken(): void {
+    try {
+      const sessionRaw = localStorage.getItem('session') || '';
+      if (!sessionRaw) {
+        // fallback: AuthStateService o token distinto
+        const profile = (this as any).authStateService?.currentUser;
+        this.userEmail = profile?.email || profile?.nombre || profile?.username || '';
+        return;
+      }
+
+      let token = '';
+      // Puede venir JSON con access_token o token raw
+      try {
+        const parsed = JSON.parse(sessionRaw);
+        token = parsed?.access_token || parsed?.token || '';
+      } catch {
+        token = sessionRaw || '';
+      }
+      if (!token) {
+        const profile = (this as any).authStateService?.currentUser;
+        this.userEmail = profile?.email || profile?.nombre || profile?.username || '';
+        return;
+      }
+
+      // Intentar decodificar JWT de forma segura
+      const parts = token.split('.');
+      if (parts.length < 2) {
+        // Not a standard JWT - fallback a profile
+        const profile = (this as any).authStateService?.currentUser;
+        this.userEmail = profile?.email || profile?.nombre || profile?.username || '';
+        return;
+      }
+      const payloadJson = atob(parts[1].replace(/-/g, '+').replace(/_/g, '/'));
+      const payload = JSON.parse(payloadJson);
+      this.decodedToken = payload;
+      this.userEmail = payload?.email || payload?.nombre || payload?.username || payload?.sub || '';
+    } catch (e) {
+      // fallback a AuthStateService si está disponible
+      const profile = (this as any).authStateService?.currentUser;
+      this.userEmail = profile?.email || profile?.nombre || profile?.username || '';
+    }
+  }
+
   logout(): void {
     // Elimina el token del localStorage
     localStorage.removeItem('session');
     // Si tienes lógica adicional en AuthStateService, puedes llamarla también:
     this.authStateService.signOut?.();
+    this.closeUserMenu();
     // Redirige al login en el otro dominio
     window.location.href = 'http://localhost:4200/log-in';
   }

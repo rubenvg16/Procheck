@@ -68,47 +68,68 @@ export class DashboardService {
     }
   }
   
-  async buscarConexiones(idConexiones: string[]): Promise<any> {
+  async buscarConexiones(idConexiones: string[] | number[]): Promise<any> {
     try {
+      // Asegurar que los IDs sean números
+      const numericIds = idConexiones.map(id => Number(id)).filter(id => !isNaN(id));
+      
+      console.log('Buscando conexiones con IDs:', numericIds);
+      
+      if (numericIds.length === 0) {
+        console.log('No hay IDs válidos para buscar');
+        return { error: 'No hay IDs válidos' };
+      }
+
       // Buscar todas las conexiones asociadas a los ids proporcionados
       const conexiones = await this.conexionesbdRepository.find({
         where: {
-          idConexion: In(idConexiones.map(id => Number(id))),
+          idConexion: In(numericIds),
         },
       });
-  
+
+      console.log('Conexiones encontradas en BD:', conexiones);
+
       if (!conexiones || conexiones.length === 0) {
-        console.log('Ninguna conexión encontrada');
+        console.log('Ninguna conexión encontrada para los IDs:', numericIds);
         return { error: 'Ninguna conexión encontrada' };
       }
-  
+
       return conexiones;
     } catch (error) {
-      console.error('Error al buscar conexiones', error);
+      console.error('Error al buscar conexiones:', error);
       return { error: 'Error al buscar conexiones' };
     }
   }
   
   async getConexiones(token: string) {
     const nombre = await this.decodeToken(token);
-  
+
     if (!nombre) {
       return { error: 'Token no válido' };
     }
-  
+
     // Obtener todos los permisos
     const permisos = await this.getPermisos(nombre);
     if (permisos?.error) {
+      console.log('Sin permisos encontrados para el usuario:', nombre);
       return permisos;
     }
-  
+
+    // Log para debugging
+    console.log('Permisos encontrados:', permisos);
+
     // Obtener las conexiones correspondientes a todos los permisos encontrados
     const idsConexion = permisos.map(permiso => permiso.idConexion);
+    console.log('IDs de conexión a buscar:', idsConexion);
+    
     const conexiones = await this.buscarConexiones(idsConexion);
+    
     if (conexiones?.error) {
+      console.log('Error al buscar conexiones:', conexiones.error);
       return conexiones;
     }
-  
+
+    console.log('Conexiones encontradas:', conexiones);
     return { conexiones: conexiones };
   }
   

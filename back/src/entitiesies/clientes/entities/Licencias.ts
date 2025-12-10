@@ -24,21 +24,4 @@ export class Licencias {
     default: () => "CURRENT_TIMESTAMP",
   })
   fechaActualizacion: Date;
-
-  @Column("int", { name: "Cajas", default: () => "'1'" })
-  cajas: number;
-
-  @Column("int", { name: "Mandos", default: () => "'0'" })
-  mandos: number;
-
-  @Column("varchar", { name: "Hdd", length: 45 })
-  hdd: string;
-
-  // Relación con Conexionesbd
-  @ManyToOne(() => Conexionesbd, (conexionesbd) => conexionesbd.licencias, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "IdConexion", referencedColumnName: "idConexion" }])
-  idConexion2: Conexionesbd;
 }

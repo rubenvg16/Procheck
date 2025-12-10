@@ -13,7 +13,7 @@ export async function enviarmail(destino: string, asunto: string, mensaje: strin
         });
 
         const result = await transporter.sendMail({
-            from: '"Notificaciones Bartolomé Consultores" <reports@tpvs.es>',
+            from: '"Notificaciones Procheck" <reports@tpvs.es>',
             to: destino,
             subject: asunto,
             html: mensaje,

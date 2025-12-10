@@ -100,7 +100,7 @@ export class AuthService {
             const paramMail = encodeURIComponent(this.encriptar(email));
             const verifyLink = `http://localhost:4200/auth/verify?np=${paramMail}`;
 
-            const asunto = 'Verifica tu cuenta de Bartolomé Consultores';
+            const asunto = 'Verifica tu cuenta de Procheck';
             const mensaje = `<a href="${verifyLink}">Pulse aquí para validar su cuenta.</a><br><br>
             Si no funcionara el enlace, copie y pegue en la barra de direcciones la siguiente dirección:<br>${verifyLink}<br><br>
             Si tiene alguna duda respecto responda a este correo y nuestro servicio técnico se pondrá en contacto con usted lo antes posible.`;

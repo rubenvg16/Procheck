@@ -1,5 +1,23 @@
 <app-navbar [title]="'Procheck - Gestión'" [showBack]="false"></app-navbar>
 
+<!-- Nuevo: botón/logo fijo en la esquina superior izquierda (sobre el navbar) -->
+<div class="navbar-user-top-left" role="navigation" aria-label="User menu">
+  <button class="btn btn-sm btn-outline-primary navbar-inline-user-btn d-inline-flex align-items-center"
+          type="button" (click)="toggleUserMenu($event)" [attr.aria-expanded]="showUserMenu" title="Menú usuario">
+    <img *ngIf="showLogo" [src]="logoSrc" (error)="onLogoError($event)" alt="logo" class="logo-small" />
+    <ng-container *ngIf="!showLogo"><mat-icon>account_circle</mat-icon></ng-container>
+  </button>
+
+  <div *ngIf="showUserMenu" class="custom-context-menu user-menu-fixed" (click)="$event.stopPropagation()">
+    <div class="context-menu-item disabled">
+      <mat-icon>person</mat-icon> {{ userEmail || 'Usuario' }}
+    </div>
+    <button type="button" class="context-menu-item btn btn-outline-danger logout-btn" (click)="logout()">
+      <mat-icon>logout</mat-icon> Cerrar sesión
+    </button>
+  </div>
+</div>
+
 <!-- Mensaje tipo toast (igual que en user y lista-detalle) -->
 <div *ngIf="message" class="alert-message-wrapper" [class.fade-out]="fadeOutMessage">
   <div [ngClass]="{'alert-success': messageType === 'success', 'alert-error': messageType === 'error'}" class="alert-message">
@@ -44,23 +62,19 @@
             <span class="badge-count">{{ (conexion.checklists.length || 0) }}</span>
           </button>
         </div>
-
-        <div class="mt-3 d-flex justify-content-center">
-          <button class="btn btn-outline-danger w-100" (click)="logout()">
-            <mat-icon>logout</mat-icon> Cerrar sesión
-          </button>
-        </div>
       </div>
     </aside>
 
     <!-- MAIN: checklists -->
-    <main class="col-12 col-md-9">
+    <main class="col-12 col-md-9 main-column">
       <div class="card p-3 mb-3">
-        <div class="text-center mb-3">
-          <h2 class="dashboard-title mb-3">Listas</h2>
-        </div>
-        <div class="header-panel d-flex flex-column align-items-center justify-content-center mb-3">
-          <div class="header-stats mb-2" aria-hidden="true">
+        <div class="header-panel d-flex flex-column gap-3 mb-3">
+          <div class="header-left">
+            <h2 class="dashboard-title mb-0">Listas</h2>
+          </div>
+
+          <!-- Stats justo debajo del título -->
+          <div class="header-stats d-flex justify-content-center gap-4">
             <div class="stat-pill">
               <div class="stat-num">{{ totalLists }}</div>
               <div class="stat-label">Total</div>
@@ -74,17 +88,18 @@
               <div class="stat-label">Inactivas</div>
             </div>
           </div>
-          <div class="header-actions d-flex align-items-center gap-2 justify-content-center">
-            <div class="input-group me-2 search-lists-wrapper">
+
+          <!-- Buscador y switch en la misma fila -->
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <div class="input-group search-lists-wrapper">
               <span class="input-group-text"><i class="bi bi-search"></i></span>
               <input type="text" class="form-control form-control-sm search-lists" placeholder="Buscar listas..." [(ngModel)]="searchQuery" />
             </div>
             <div class="d-flex align-items-center">
               <label class="me-2 small text-muted mb-0">Inactivas</label>
-              <div class="modern-switch-container me-2">
+              <div class="modern-switch-container">
                 <div class="toggle-switch">
-                  <input type="checkbox" id="switchTop" class="toggle-input" [checked]="mostrarInactivas"
-                    (change)="toggleInactives($event)">
+                  <input type="checkbox" id="switchTop" class="toggle-input" [checked]="mostrarInactivas" (change)="toggleInactives($event)">
                   <label for="switchTop" class="toggle-label">
                     <span class="toggle-handle"></span>
                   </label>
@@ -94,17 +109,18 @@
           </div>
         </div>
 
+        <!-- Listas -->
         <div *ngIf="isLoading" class="text-center py-5">
           <div class="spinner-border" role="status"><span class="visually-hidden">Cargando...</span></div>
         </div>
 
         <div *ngIf="!isLoading">
           <div *ngIf="(getDisplayedChecklists().length || 0) === 0" class="no-lists-message card p-4 text-center">
-             <i class="bi bi-info-circle me-2"></i>
-             No hay listas que coincidan con los filtros.
-           </div>
+            <i class="bi bi-info-circle me-2"></i>
+            No hay listas que coincidan con los filtros.
+          </div>
 
-           <div class="listas-grid">
+          <div class="listas-column">
             <div *ngFor="let checklist of getDisplayedChecklists()"
                  class="lista-card p-3"
                  [ngClass]="{'checklist-inactiva': !checklist.alta, 'checklist-activa': checklist.alta}"
@@ -125,12 +141,12 @@
                 </div>
               </div>
             </div>
-           </div>
-         </div>
-       </div>
-     </main>
-   </div>
- </section>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
 
 <!-- Menú contextual principal -->
 <div *ngIf="contextMenuVisible"

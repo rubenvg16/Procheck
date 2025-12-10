@@ -17,7 +17,13 @@ export class UserService {
   getUsers(): Observable<any[]> {
     return this._http.get<any[]>(`${this.apiUrl}`).pipe(
       retry(1),
-      catchError(this.handleError)
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          console.warn('No se encontraron usuarios, devolviendo lista vacía.');
+          return []; // Devuelve un array vacío si no hay usuarios
+        }
+        return this.handleError(error);
+      })
     );
   }
 

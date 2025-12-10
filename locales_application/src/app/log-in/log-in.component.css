@@ -232,6 +232,13 @@ label {
   }
 }
 
+.bartolome-logo-img {
+  width: 200px;
+  height: 200px;
+  max-width: 100%; /* Ensures responsiveness without distortion */
+  object-fit: contain; /* Maintains aspect ratio */
+}
+
 /* ========================== */
 /* Responsive */
 /* ========================== */
@@ -289,8 +296,8 @@ label {
 
   .bartolome-logo-animated svg,
   .bartolome-svg {
-    width: 100px !important;
-    height: 100px !important;
+    width: 200px !important; /* Fixed to desktop resolution */
+    height: 200px !important; /* Fixed to desktop resolution */
   }
 }
 
@@ -337,7 +344,7 @@ label {
 
   .bartolome-logo-animated svg,
   .bartolome-svg {
-    width: 70px !important;
-    height: 70px !important;
+    width: 200px !important; /* Fixed to desktop resolution */
+    height: 200px !important; /* Fixed to desktop resolution */
   }
 }

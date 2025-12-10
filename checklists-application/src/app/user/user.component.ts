@@ -111,16 +111,16 @@ export default class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
-      this.users = data['users'];
-      this.conexiones = data['conexiones'];
-      
+      this.users = data['users'] || []; // Aseguramos que sea un array vacío si no hay usuarios
+      this.conexiones = data['conexiones'] || []; // Aseguramos que sea un array vacío si no hay conexiones
+
       // Establecer el primer local como predeterminado si está disponible
-      if (this.conexiones && this.conexiones.length > 0) {
+      if (this.conexiones.length > 0) {
         this.userForm.patchValue({
           local: this.conexiones[0].nombreConexion
         });
       }
-      
+
       this.isLoading = false;
       this.sortData({ active: 'usuario', direction: 'asc' }); // Ordenamiento inicial
     });
