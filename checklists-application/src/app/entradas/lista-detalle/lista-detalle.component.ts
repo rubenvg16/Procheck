@@ -12,7 +12,6 @@ import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
-import { DarkmodeToggleComponent } from '../../shared/darkmode-toggle/darkmode-toggle.component';
 
 @Component({
   selector: 'app-lista-detalle',
@@ -27,7 +26,6 @@ import { DarkmodeToggleComponent } from '../../shared/darkmode-toggle/darkmode-t
     ReactiveFormsModule, 
     MatProgressSpinnerModule, 
     NavbarComponent,
-    DarkmodeToggleComponent
   ],
   templateUrl: './lista-detalle.component.html',
   styleUrls: ['./lista-detalle.component.css'],

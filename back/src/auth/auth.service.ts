@@ -143,7 +143,7 @@ export class AuthService {
         const paramMail = encodeURIComponent(this.encriptar(paramPlano));
         const resetLink = `http://localhost:4200/auth/reset-password?np=${paramMail}`;
 
-        const asunto = 'Recuperar contraseña de Bartolome';
+        const asunto = 'Recuperar contraseña de Procheck';
         const mensaje = `<a href="${resetLink}">Pulse aquí para introducir una nueva contraseña.</a><br><br>
         Si no funcionara el enlace, copie y pegue en la barra de direcciones la siguiente dirección:<br>${resetLink}<br><br>
         Si tiene alguna duda respecto responda a este correo y nuestro servicio técnico se pondrá en contacto con usted lo antes posible.`;
